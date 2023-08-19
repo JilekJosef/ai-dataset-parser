@@ -84,15 +84,7 @@ public class DatasetSubject {
         }
     }
 
-    public void createLink(boolean copy) throws IOException, ShellLinkException {
-        if(copy){
-            Files.copy(media.toPath(), Path.of(Main.outputPath + "\\" + media.getName()));
-        }else{
-            ShellLink sl = new ShellLink();
-            Path targetPath = Paths.get(this.media.toURI()).toAbsolutePath();
-            String root = targetPath.getRoot().toString();
-            String path = targetPath.subpath(0, targetPath.getNameCount()).toString();
-            (new ShellLinkHelper(sl)).setLocalTarget(root, path, Options.ForceTypeFile).saveTo(Main.outputPath + "\\" + this.media.getName() + ".lnk");
-        }
+    public void copy() throws IOException {
+        Files.copy(media.toPath(), Path.of(Main.outputPath + "\\" + media.getName()));
     }
 }

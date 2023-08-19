@@ -1,13 +1,12 @@
 import java.io.File;
 import java.io.IOException;
 import java.util.LinkedList;
-import mslinks.ShellLinkException;
 
 public class Main {
-    public static final String rootPath = "D:\\Users\\jilek\\Documents\\Dataset";
-    public static final String outputPath = "D:\\Users\\jilek\\Documents\\working";
+    public static final String rootPath = "D:\\Users\\jilek\\Documents\\Hand";
+    public static final String outputPath = "D:\\Users\\jilek\\Documents\\HandFilter";
 
-    public static void main(String[] args) throws IOException, ShellLinkException {
+    public static void main(String[] args) throws IOException {
         File[] files = (new File(rootPath)).listFiles();
         LinkedList<DatasetSubject> dataset = new LinkedList<>();
 
@@ -19,15 +18,15 @@ public class Main {
 
         String addDefaultTag = "";
         String[] extensions = new String[]{"png", "jpg", "jpeg", "webp"};
-        int minScore = 5;
-        String[] includeTags = {"laffey (azur lane)"};
-        String[] excludeTags = {"2girls", "1boy", "ai-generated"};
-        String[] includeRating = new String[]{"safe"}; //"safe", "explicit", "questionable", "sensitive"
+        int minScore = 50;
+        String[] includeTags = {"loli"};
+        String[] excludeTags = {"ai-generated"};
+        String[] includeRating = new String[]{"safe", "explicit", "questionable", "sensitive"}; //"safe", "explicit", "questionable", "sensitive"
 
         for(DatasetSubject datasetSubject : dataset){
             if (datasetSubject.meetsRequirements(minScore, includeTags, excludeTags, includeRating, extensions)) {
                 datasetSubject.createTagFile(addDefaultTag);
-                datasetSubject.createLink(true);
+                datasetSubject.copy();
             }
         }
     }
